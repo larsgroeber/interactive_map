@@ -1,0 +1,15 @@
+#svg-container {
+    cursor: move;
+  height: 0;
+  // https://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css/
+  // svg_height / svg_width * 100%
+  padding-top: 595.276 / 561.26 * 100%;
+  position: relative;
+  #svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

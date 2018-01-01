@@ -1,0 +1,27 @@
+{
+  "name": "interactive-map",
+  "version": "0.1.0",
+  "description": "Interactive map for the RiedbergTV project: http://riedberg.tv",
+  "main": "index.js",
+  "author": "Lars Gröber",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.23.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "gulp": "^3.9.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-stream": "^4.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "popmotion": "^8.1.3"
+  }
+}
