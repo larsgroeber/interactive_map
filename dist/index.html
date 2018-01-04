@@ -1,21 +1,38 @@
 <html>
 
 <head>
-  <title>Getting Started</title>
+  <title>RiedbergTV Interaktive Karte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="interactive-map.css">
-  <style>
-    #interactive-map {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-  </style>
+  <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
 </head>
 
 <body>
-  <div id="interactive-map"></div>
+  <div id="interactive-map">
+    <div id="buttons">
+      <button id="zoom-out-btn">
+        <i class="fas fa-expand-arrows-alt"></i>
+      </button>
+      <button>
+        <i class="fas fa-question-circle"></i>
+      </button>
+    </div>
+  </div>
+  <div class="modal" id="detail-modal-container">
+    <div class="modal-content" id="detail-modal">
+      <div id="modal-title">
+          <span id="modal-close" class="close">&times;</span>
+        <a id="modal-link"><h2></h2></a>
+        <h2 id="modal-no-link" hidden></h2>
+      </div>
+      <div id="modal-video">
+        <video controls></video>
+      </div>
+      <div id="modal-description"></div>
+      <div id="modal-more-videos"></div>
+    </div>
+  </div>
+
   <script src="bundle.js"></script>
 </body>
 

@@ -1,4 +1,4 @@
 export default {
-    dataUrl: 'data',
+    dataUrl: 'pathData.json',
     id: 'interactive-map',
 }

@@ -1,15 +1,119 @@
-#svg-container {
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  font-family: "opensans-regular", sans-serif;
+}
+
+#interactive-map {
+  display: hidden;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0;
+
+  #svg-container {
     cursor: move;
-  height: 0;
-  // https://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css/
-  // svg_height / svg_width * 100%
-  padding-top: 595.276 / 561.26 * 100%;
-  position: relative;
-  #svg {
+    height: 0;
+    // https://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css/
+    // svg_height / svg_width * 100%
+    padding-top: 546.276 / 459.26001 * 100%;
+    position: relative;
+    #svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  #buttons {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    right: 5px;
+    bottom: 5px;
+    z-index: 1;
+
+    button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      background-color: white;
+      border: none;
+      box-shadow: #888 4px 4px 5px;
+      transition: all 0.3s;
+      outline: none;
+
+      &:hover {
+        background-color: rgb(230, 230, 230);
+      }
+
+      &:active {
+        transition:  none;
+        box-shadow: #888 1px 1px 5px;
+      }
+    }
+  }
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+  .modal-content {
+    $padding: 20px;
+    background-color: #000000;
+    color: white;
+    margin: 15vh auto; /* 15% from the top and centered */
+    padding: $padding;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 800px;
+    max-height: 900px;
+    overflow: auto;
+
+    #modal-title {
+      margin-bottom: $padding;
+      a {
+        color: white;
+      }
+      h2 {
+        margin: 0;
+      }
+    }
+
+    #modal-video {
+      position: relative;
+      margin-left: -$padding;
+      margin-right: -$padding;
+      video {
+        width: 100%;
+      }
+    }
+
+    #modal-description {
+      margin-top: $padding;
+    }
+  }
+
+  .close {
+    color: rgb(207, 207, 207);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: rgb(133, 133, 133);
+    text-decoration: none;
+    cursor: pointer;
   }
 }
