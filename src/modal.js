@@ -52,6 +52,9 @@ export class Modal {
         const videoLink = data.video;
         if (videoLink) {
             this.video.src = videoLink;
+            this.video.style.display = "block";
+        } else {
+            this.video.style.display = "none";
         }
     }
 
