@@ -17,7 +17,12 @@ body {
     height: 0;
     // https://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css/
     // svg_height / svg_width * 100%
-    padding-top: 546.276 / 459.26001 * 100%;
+    $svg-width: 459.26001;
+    $svg-height: 546.276;
+    $scale: 1;
+
+    padding-top: $svg-height / $svg-width * 100% * $scale;
+    width: 100% * $scale;
     position: relative;
     #svg {
       position: absolute;

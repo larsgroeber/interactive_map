@@ -6,6 +6,7 @@
   "author": "Lars Gröber",
   "license": "MIT",
   "scripts": {
+    "start": "gulp server",
     "build": "webpack"
   },
   "devDependencies": {

@@ -11,7 +11,12 @@ export class InteractiveMap {
     this.mapElement = document.createElement("object");
     this.mapElement.data = map;
     this.svgElement = null;
+    this.mapContainerStyle = null;
+    this.originalStyle = null;
+    this.svgStyler = null;
     this.paths = [];
+    this.scale = 1;
+    this.originalScale = 1;
 
     this.pathDataParser = new PathDataParser();
 
@@ -27,14 +32,20 @@ export class InteractiveMap {
       this.svgElement.id = "svg";
       this.mapContainer.appendChild(this.svgElement);
       this.mapElement.remove();
+      this.mapContainerStyle = window.getComputedStyle(this.mapContainer, null);
+      this.originalStyle = {
+        padding: this.mapContainerStyle["padding-top"],
+        width: this.mapContainerStyle["width"]
+      };
       this.onSvgLoad();
     });
   }
 
   onSvgLoad() {
-    const svgStyler = styler(this.svgElement);
-    let scale = 1;
-    const svgDocXY = value({ x: 0, y: 0 }, svgStyler.set);
+    this.svgStyler = styler(this.svgElement);
+    const svgDocXY = this.setupSvgPosition();
+    this.originalScale = this.scale;
+    this.scaleSvg();
 
     listen(this.svgElement, "mousedown touchstart").start(e => {
       const svgRect = this.svgElement.getBoundingClientRect();
@@ -53,12 +64,16 @@ export class InteractiveMap {
     listen(this.svgElement, "wheel").start(e => {
       const scroll = e.deltaY;
       if (scroll > 0) {
-        scale -= 0.2;
+        this.scale -= 0.2;
       } else {
-        scale += 0.2;
+        this.scale += 0.2;
       }
-      scale = constrain(1, 2, scale);
-      svgStyler.set({ scale: scale });
+      this.scale = constrain(
+        this.originalScale,
+        this.originalScale + 1,
+        this.scale
+      );
+      this.scaleSvg();
     });
 
     listen(this.svgElement, "touchstart")
@@ -67,33 +82,59 @@ export class InteractiveMap {
         multitouch(svgDocXY.get()).start(svgDocXY);
       });
 
-    listen(document.getElementById('zoom-out-btn'), "click")
-      .start(() => {
-          scale = 1;
-          svgStyler.set({ scale: scale })
-      })
+    listen(document.getElementById("zoom-out-btn"), "click").start(() => {
+      this.scale = this.originalScale;
+      this.scaleSvg();
+    });
 
     this.pathDataParser.getData().then(() => {
       this.setupPaths();
     });
   }
 
+  setupSvgPosition() {
+    const svgRect = this.svgElement.getBoundingClientRect();
+    const mainWidth = this.mainElement.clientWidth;
+    const mainHeight = this.mainElement.clientHeight;
+    let x = 0;
+    let y = 0;
+    if (svgRect.height > mainHeight) {
+      x = svgRect.x;
+      y = svgRect.y - (svgRect.height - mainHeight) / 4;
+    } else {
+      this.scale = mainHeight / svgRect.height;
+      this.scaleSvg();
+      x =
+        svgRect.x -
+        (this.svgElement.getBoundingClientRect().width - mainWidth) / 2;
+    }
+    this.svgStyler.set({
+      x: x,
+      y: y
+    });
+    return value({ x: x, y: y }, this.svgStyler.set);
+  }
+
   constrainXY(x, y, svgRect) {
     return {
-      x: constrain(
-        -(svgRect.width - (this.mainElement.clientWidth - Math.abs(svgRect.x))),
-        -svgRect.x,
-        x
-      ),
-      y: constrain(
-        -(
-          svgRect.height -
-          (this.mainElement.clientHeight - Math.abs(svgRect.y))
-        ),
-        -svgRect.y,
-        y
-      )
+      x: constrain(this.mainElement.clientWidth - svgRect.width, 0, x),
+      y: constrain(this.mainElement.clientHeight - svgRect.height, 0, y)
     };
+  }
+
+  scaleSvg() {
+    // hack because svg scaling/responsiveness is not well supported...
+    const oldHeight = parseFloat(this.originalStyle.padding);
+    const oldWidth = parseFloat(this.originalStyle.width);
+    const height = oldHeight * this.scale;
+    const width = oldWidth * this.scale;
+
+    // this.svgStyler.set({
+    //   x: this.svgStyler.get().x - (width - oldWidth),
+    //   y: this.svgStyler.get().y - (height - oldHeight)
+    // });
+    this.mapContainer.style.paddingTop = height;
+    this.mapContainer.style.width = width;
   }
 
   setupPaths() {
