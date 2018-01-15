@@ -63,18 +63,21 @@ export class InteractiveMap {
     });
 
     listen(this.svgElement, "wheel").start(e => {
-      const scroll = e.deltaY;
-      if (scroll > 0) {
-        this.scale -= 0.2;
-      } else {
-        this.scale += 0.2;
+      if (e.shiftKey) {
+        e.preventDefault();
+        const scroll = e.deltaY;
+        if (scroll > 0) {
+          this.scale -= 0.2;
+        } else {
+          this.scale += 0.2;
+        }
+        this.scale = constrain(
+          this.originalScale,
+          this.originalScale + 1,
+          this.scale
+        );
+        this.scaleSvg();
       }
-      this.scale = constrain(
-        this.originalScale,
-        this.originalScale + 1,
-        this.scale
-      );
-      this.scaleSvg();
     });
 
     listen(this.svgElement, "touchstart")

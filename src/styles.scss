@@ -39,6 +39,15 @@ body {
     bottom: 5px;
     z-index: 1;
 
+    #zoom-info {
+      display: inline;
+
+      @media screen and (min-device-width : 200px)
+      and (max-device-width : 780px) {
+        display: none;
+      }
+    }
+
     button {
       width: 40px;
       height: 40px;
