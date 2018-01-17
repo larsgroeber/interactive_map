@@ -3,7 +3,7 @@ import { styler, value, listen, pointer } from "popmotion";
 import { constrain, getTintedColor } from "./util";
 import { PathDataParser } from "./pathDataParser";
 import { InteractivePath } from "./path";
-import { Modal } from "./modal";
+import { VideoModal } from "./modal";
 
 export class InteractiveMap {
   constructor(map) {
@@ -92,7 +92,7 @@ export class InteractiveMap {
     });
 
     listen(document.getElementById("help-btn"), "click").start(() => {
-      new Modal().showModal('info', {
+      new VideoModal().showModal('info', {
         title: "Information",
         description: "Interaktive Karte des Campus Riedberg.<br><br>" + "<small>Entwickelt von Lars Gröber</small>"
       })

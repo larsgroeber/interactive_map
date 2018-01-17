@@ -1,4 +1,4 @@
-export class Modal {
+export class VideoModal {
     constructor() {
         this.modalContainer = document.getElementById('detail-modal-container');
         this.modal = document.getElementById('detail-modal');
@@ -13,6 +13,7 @@ export class Modal {
 
     onClose() {
         this.video.pause();
+        this.video.innerHTML = "";
         this.modalContainer.style.display = "none";
     }
 
@@ -49,9 +50,15 @@ export class Modal {
     }
 
     setVideo(data) {
-        const videoLink = data.video;
-        if (videoLink) {
-            this.video.src = videoLink;
+        let videoLinks = data.video;
+        
+        if (videoLinks) {
+            videoLinks = Array.isArray(videoLinks) ? videoLinks : [videoLinks];
+            videoLinks.forEach(video => {
+                const source = document.createElement('source');
+                source.src = video;
+                this.video.appendChild(source);
+            })
             this.video.style.display = "block";
         } else {
             this.video.style.display = "none";

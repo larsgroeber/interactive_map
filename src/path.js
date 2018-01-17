@@ -1,4 +1,4 @@
-import { Modal } from "./modal";
+import { VideoModal } from "./modal";
 import * as SVG from "svg.js";
 import { constrain, getTintedColor } from "./util";
 import { InteractivePath } from "./path";
@@ -14,7 +14,7 @@ export class InteractivePath {
     this.data = pathDataParser.getId(this.id);
     this.animation = null;
     this.tintedColor = getTintedColor(this.color, 100);
-    this.modal = new Modal();
+    this.modal = new VideoModal();
     this.clickedOnPath = false;
     this.setup();
   }
