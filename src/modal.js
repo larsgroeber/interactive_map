@@ -47,6 +47,7 @@ export class VideoModal {
             fallBackTitle.style.display = "block";
             link.style.display = "none";
         }
+        this.video.load();
     }
 
     setVideo(data) {
