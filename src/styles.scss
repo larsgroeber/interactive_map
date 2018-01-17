@@ -83,14 +83,17 @@ body {
 
   .modal-content {
     $padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #000000;
     color: white;
-    margin: 15vh auto; /* 15% from the top and centered */
     padding: $padding;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%;
     max-width: 800px;
-    max-height: 900px;
+    max-height: 80vh;
     overflow: auto;
 
     #modal-title {
@@ -114,6 +117,21 @@ body {
 
     #modal-description {
       margin-top: $padding;
+    }
+
+    @media screen and (max-height: 400px) {
+      $padding: 5px;
+      padding: $padding;
+      width: 95vw;
+      max-height: 95vh;
+
+      #modal-title {
+        margin-bottom: $padding
+      }
+
+      #modal-description {
+        margin-top: $padding;
+      }
     }
   }
 

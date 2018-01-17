@@ -10,6 +10,7 @@ export class InteractiveMap {
     this.mainElement = document.getElementById(environment.id);
     this.mapContainer = document.createElement("div");
     this.mapElement = document.createElement("object");
+    this.spinner = document.getElementById("spinner");
     this.mapElement.data = map;
     this.svgElement = null;
     this.mapContainerStyle = null;
@@ -39,6 +40,7 @@ export class InteractiveMap {
         width: this.mapContainerStyle["width"]
       };
       this.onSvgLoad();
+      this.spinner.style.display = "none";
     });
   }
 
