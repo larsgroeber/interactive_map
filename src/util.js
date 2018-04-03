@@ -4,7 +4,7 @@ export function constrain(min, max, value) {
 
 export function dispatchEvent(name, payload) {
   const event = new CustomEvent(name, {detail: payload});
-  document.dispatchEvent(event);
+  window.dispatchEvent(event);
 }
 
 export function getTintedColor(color, v) {
