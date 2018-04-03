@@ -5,3 +5,4 @@ import { InteractiveMap } from "./map";
 
 
 const map = new InteractiveMap(Map);
+

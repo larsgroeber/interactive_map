@@ -1,6 +1,6 @@
 import { VideoModal } from "./modal";
 import * as SVG from "svg.js";
-import { constrain, getTintedColor } from "./util";
+import { constrain, getTintedColor, dispatchEvent } from "./util";
 import { InteractivePath } from "./path";
 
 export class InteractivePath {
@@ -33,14 +33,15 @@ export class InteractivePath {
   }
 
   animate() {
+
     this.animation = this.svgPath
       .animate()
       .attr({ fill: this.tintedColor })
-      .loop(true, true);
+      .loop(2, true);
   }
 
   onPathEnter(event) {
-    this.animation.stop();
+    // this.animation.stop();
     this.path.setAttribute("fill", this.tintedColor);
   }
 
@@ -51,7 +52,8 @@ export class InteractivePath {
 
   onPathMouseUp(event) {
     if (this.clickedOnPath) {
-      this.modal.showModal(this.id, this.data);
+      // this.modal.showModal(this.id, this.data);
+      dispatchEvent('pathClicked', {id: this.id});
       this.clickedOnPath = false;
     }
   }

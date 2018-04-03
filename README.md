@@ -64,3 +64,12 @@ Edit the file `pathData.json`, it is composed of a series of smaller Objects:
     }
 }
 ```
+
+## Getting click event
+
+Get 'pathClicked' event:
+```js
+  document.addEventListener('pathClicked', event => {
+    const id = event.detail.id; // e.g. 'physik'
+  })
+```

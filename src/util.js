@@ -2,6 +2,11 @@ export function constrain(min, max, value) {
   return Math.min(max, Math.max(min, value));
 }
 
+export function dispatchEvent(name, payload) {
+  const event = new CustomEvent(name, {detail: payload});
+  document.dispatchEvent(event);
+}
+
 export function getTintedColor(color, v) {
   if (!color) {
     return color;

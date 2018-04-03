@@ -64,34 +64,34 @@ export class InteractiveMap {
       svgDocXY.stop();
     });
 
-    listen(this.svgElement, "wheel").start(e => {
-      if (e.shiftKey) {
-        e.preventDefault();
-        const scroll = e.deltaY;
-        if (scroll > 0) {
-          this.scale -= 0.2;
-        } else {
-          this.scale += 0.2;
-        }
-        this.scale = constrain(
-          this.originalScale,
-          this.originalScale + 1,
-          this.scale
-        );
-        this.scaleSvg();
-      }
-    });
+    // listen(this.svgElement, "wheel").start(e => {
+    //   if (e.shiftKey) {
+    //     e.preventDefault();
+    //     const scroll = e.deltaY;
+    //     if (scroll > 0) {
+    //       this.scale -= 0.2;
+    //     } else {
+    //       this.scale += 0.2;
+    //     }
+    //     this.scale = constrain(
+    //       this.originalScale,
+    //       this.originalScale + 1,
+    //       this.scale
+    //     );
+    //     this.scaleSvg();
+    //   }
+    // });
 
-    listen(this.svgElement, "touchstart")
-      .filter(({ touches }) => touches.length >= 2)
-      .start(() => {
-        multitouch(svgDocXY.get()).start(svgDocXY);
-      });
-
-    listen(document.getElementById("zoom-out-btn"), "click").start(() => {
-      this.scale = this.originalScale;
-      this.scaleSvg();
-    });
+    // listen(this.svgElement, "touchstart")
+    //   .filter(({ touches }) => touches.length >= 2)
+    //   .start(() => {
+    //     multitouch(svgDocXY.get()).start(svgDocXY);
+    //   });
+    //
+    // listen(document.getElementById("zoom-out-btn"), "click").start(() => {
+    //   this.scale = this.originalScale;
+    //   this.scaleSvg();
+    // });
 
     listen(document.getElementById("help-btn"), "click").start(() => {
       new VideoModal().showModal('info', {
@@ -101,6 +101,7 @@ export class InteractiveMap {
     })
 
     this.pathDataParser.getData().then(() => {
+
       this.setupPaths();
     });
   }
