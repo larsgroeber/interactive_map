@@ -1,4 +1,4 @@
-import environment from "./environment";
+import environment from './environment';
 
 export class PathDataParser {
   constructor() {
@@ -6,15 +6,8 @@ export class PathDataParser {
   }
 
   getData() {
-    const dataUrl = environment.dataUrl;
-    return new Promise((res, rej) => {
-      fetch(dataUrl).then(response => {
-        return response.json()
-      }).then(data => {
-        this.data = data;
-        res();
-      })
-    })
+    this.data = require('./pathData.json');
+    return Promise.resolve(this.data);
   }
 
   getId(id) {
