@@ -1,16 +1,16 @@
-import environment from "./environment";
-import { styler, value, listen, pointer } from "popmotion";
-import { constrain, getTintedColor } from "./util";
-import { PathDataParser } from "./pathDataParser";
-import { InteractivePath } from "./path";
-import { VideoModal } from "./modal";
+import environment from './environment';
+import { styler, value, listen, pointer } from 'popmotion';
+import { constrain, getTintedColor } from './util';
+import { PathDataParser } from './pathDataParser';
+import { InteractivePath } from './path';
+import { VideoModal } from './modal';
 
 export class InteractiveMap {
   constructor(map) {
     this.mainElement = document.getElementById(environment.id);
-    this.mapContainer = document.createElement("div");
-    this.mapElement = document.createElement("object");
-    this.spinner = document.getElementById("spinner");
+    this.mapContainer = document.createElement('div');
+    this.mapElement = document.createElement('object');
+    this.spinner = document.getElementById('spinner');
     this.mapElement.data = map;
     this.svgElement = null;
     this.mapContainerStyle = null;
@@ -28,30 +28,30 @@ export class InteractiveMap {
   setup() {
     this.mapContainer.appendChild(this.mapElement);
     this.mainElement.appendChild(this.mapContainer);
-    this.mapContainer.id = "svg-container";
-    this.mapElement.addEventListener("load", svgDoc => {
-      this.svgElement = this.mapElement.contentDocument.querySelector("svg");
-      this.svgElement.id = "svg";
+    this.mapContainer.id = 'svg-container';
+    this.mapElement.addEventListener('load', svgDoc => {
+      this.svgElement = this.mapElement.contentDocument.querySelector('svg');
+      this.svgElement.id = 'svg';
       this.mapContainer.appendChild(this.svgElement);
       this.mapElement.remove();
       this.mapContainerStyle = window.getComputedStyle(this.mapContainer, null);
       this.originalStyle = {
-        padding: this.mapContainerStyle["padding-top"],
-        width: this.mapContainerStyle["width"]
+        padding: this.mapContainerStyle['padding-top'],
+        width: this.mapContainerStyle['width'],
       };
       this.onSvgLoad();
-      this.spinner.style.display = "none";
+      this.spinner.style.display = 'none';
     });
   }
 
   onSvgLoad() {
-    this.svgStyler = styler(this.svgElement);
+    this.svgStyler = styler(this.mapContainer);
     const svgDocXY = this.setupSvgPosition();
     this.originalScale = this.scale;
     this.scaleSvg();
 
-    listen(this.svgElement, "mousedown touchstart").start(e => {
-      const svgRect = this.svgElement.getBoundingClientRect();
+    listen(this.mapContainer, 'mousedown touchstart').start(e => {
+      const svgRect = this.mapContainer.getBoundingClientRect();
       e.preventDefault();
       pointer(svgDocXY.get())
         .pipe(v => {
@@ -60,7 +60,7 @@ export class InteractiveMap {
         .start(svgDocXY);
     });
 
-    listen(document, "mouseup touchend").start(() => {
+    listen(document, 'mouseup touchend').start(() => {
       svgDocXY.stop();
     });
 
@@ -93,15 +93,16 @@ export class InteractiveMap {
     //   this.scaleSvg();
     // });
 
-    listen(document.getElementById("help-btn"), "click").start(() => {
+    listen(document.getElementById('help-btn'), 'click').start(() => {
       new VideoModal().showModal('info', {
-        title: "Information",
-        description: "Interaktive Karte des Campus Riedberg.<br><br>" + "<small>Entwickelt von Lars Gröber</small>"
-      })
-    })
+        title: 'Information',
+        description:
+          'Interaktive Karte des Campus Riedberg.<br><br>' +
+          '<small>Entwickelt von Lars Gröber</small>',
+      });
+    });
 
     this.pathDataParser.getData().then(() => {
-
       this.setupPaths();
     });
   }
@@ -124,7 +125,7 @@ export class InteractiveMap {
     }
     this.svgStyler.set({
       x: x,
-      y: y
+      y: y,
     });
     return value({ x: x, y: y }, this.svgStyler.set);
   }
@@ -132,7 +133,7 @@ export class InteractiveMap {
   constrainXY(x, y, svgRect) {
     return {
       x: constrain(this.mainElement.clientWidth - svgRect.width, 0, x),
-      y: constrain(this.mainElement.clientHeight - svgRect.height, 0, y)
+      y: constrain(this.mainElement.clientHeight - svgRect.height, 0, y),
     };
   }
 
@@ -152,18 +153,18 @@ export class InteractiveMap {
   }
 
   setupPaths() {
-    const a = ["path", "polygon", "rect", "circle", "g"];
+    const a = ['path', 'polygon', 'rect', 'circle', 'g'];
 
     let allObjects = [];
 
     for (let i of a) {
       allObjects = allObjects.concat(
-        Array.prototype.slice.call(this.svgElement.getElementsByTagName(i), 0)
+        Array.prototype.slice.call(this.svgElement.getElementsByTagName(i), 0),
       );
     }
 
     this.paths = allObjects
-      .filter(o => this.pathDataParser.getId(o.getAttribute("id")))
+      .filter(o => this.pathDataParser.getId(o.getAttribute('id')))
       .map(o => new InteractivePath(o, this.pathDataParser, this.svgElement));
   }
 }

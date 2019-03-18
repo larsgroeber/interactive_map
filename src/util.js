@@ -3,8 +3,12 @@ export function constrain(min, max, value) {
 }
 
 export function dispatchEvent(name, payload) {
-  const event = new CustomEvent(name, {detail: payload});
+  const event = new CustomEvent(name, { detail: payload });
   window.dispatchEvent(event);
+  if (window.top) {
+    console.log('post message');
+    window.top.postMessage(payload, '*');
+  }
 }
 
 export function getTintedColor(color, v) {
@@ -22,10 +26,10 @@ export function getTintedColor(color, v) {
   var b = Math.abs((rgb & 0xff) + v);
   if (b > 255) b = b - (b - 255);
   r = Number(r < 0 || isNaN(r)) ? 0 : (r > 255 ? 255 : r).toString(16);
-  if (r.length == 1) r = "0" + r;
+  if (r.length == 1) r = '0' + r;
   g = Number(g < 0 || isNaN(g)) ? 0 : (g > 255 ? 255 : g).toString(16);
-  if (g.length == 1) g = "0" + g;
+  if (g.length == 1) g = '0' + g;
   b = Number(b < 0 || isNaN(b)) ? 0 : (b > 255 ? 255 : b).toString(16);
-  if (b.length == 1) b = "0" + b;
-  return "#" + r + g + b;
+  if (b.length == 1) b = '0' + b;
+  return '#' + r + g + b;
 }
