@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "gulp server",
-    "build": "webpack"
+    "build": "webpack",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "devDependencies": {
     "browser-sync": "^2.23.1",
@@ -24,6 +26,8 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "popmotion": "^8.1.3",
-    "svg.js": "^2.6.3"
-  }
+    "svg.js": "^2.6.3",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
