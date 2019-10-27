@@ -1,5 +1,7 @@
 # Interactive Map
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5da528bb-e5fe-4e45-97e8-79ee6df5cc32/deploy-status)](https://app.netlify.com/sites/riedbergtv-map/deploys)
+
 Interactive map of the campus riedberg for https://riedberg.tv.
 
 ## Installation
