@@ -164,7 +164,7 @@ export class InteractiveMap {
     }
 
     this.paths = allObjects
-      .filter(o => this.pathDataParser.getId(o.getAttribute('id')))
+      .filter(o => this.pathDataParser.hasId(o.getAttribute('id')))
       .map(o => new InteractivePath(o, this.pathDataParser, this.svgElement));
   }
 }

@@ -2,7 +2,7 @@ import environment from './environment';
 
 export class PathDataParser {
   constructor() {
-    this.data = {};
+    this.data = [];
   }
 
   getData() {
@@ -12,5 +12,9 @@ export class PathDataParser {
 
   getId(id) {
     return this.data[id];
+  }
+
+  hasId(id) {
+    return this.data.some(f => f === id);
   }
 }
